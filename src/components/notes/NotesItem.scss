@@ -1,0 +1,16 @@
+.btn-corrected {
+    border: none;
+    background: transparent;
+    color: #212529;
+    transition: all 0.15 ease-in-out;
+    &:hover {
+        color: #000;
+    }
+}
+
+
+.accordion-button {
+   &::after {
+    margin-right: 75px;
+} 
+}
