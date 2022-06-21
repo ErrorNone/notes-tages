@@ -1,22 +1,29 @@
 import React, { FC, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { INotes } from "../../types/types";
+import { INotes, ITages } from "../../types/types";
 
-interface ModalNotesCorrectedProps {
+interface ModalCorrectedProps {
   show: boolean;
   handleClose: () => void;
   correctedNotes: (id: number, correctedNote: any) => void;
   note: INotes;
+  tages: ITages[];
+  tagesName: string;
+  setTagesName: (value: string) => void;
 }
 
-const ModalNotesCorrected: FC<ModalNotesCorrectedProps> = ({
+const ModalCorrected: FC<ModalCorrectedProps> = ({
   show,
   handleClose,
   correctedNotes,
   note,
+  tagesName,
+  setTagesName,
+  tages,
 }) => {
   const [titleEdit, setTitleEdit] = useState(`${note.title}`);
   const [bodyEdit, setBodyEdit] = useState(`${note.body}`);
+  const [newTeg, setNewTeg] = useState(`#${tagesName}`);
 
   const editNotes = (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault();
@@ -25,11 +32,16 @@ const ModalNotesCorrected: FC<ModalNotesCorrectedProps> = ({
       title: titleEdit,
       body: bodyEdit,
     };
+    setTagesName(newTeg);
     correctedNotes(note.id, newNotes);
 
     setTitleEdit("");
     setBodyEdit("");
+    setNewTeg("");
   };
+  
+  console.log(newTeg);
+  
 
   return (
     <Modal show={show} onHide={handleClose}>
@@ -45,6 +57,20 @@ const ModalNotesCorrected: FC<ModalNotesCorrectedProps> = ({
               value={titleEdit}
               onChange={(e) => setTitleEdit(e.target.value)}
             />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+            <Form.Label>Добавить тег</Form.Label>
+            <div className="d-flex">
+              <Form.Control
+                className="rounded-0 rounded-start"
+                placeholder="Введите тег..."
+                value={newTeg}
+                onChange={(e) => setNewTeg(e.target.value)}
+              />
+              <Button className="rounded-0 rounded-end" variant="primary">
+                Добавить
+              </Button>
+            </div>
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Label>Описание</Form.Label>
@@ -69,4 +95,4 @@ const ModalNotesCorrected: FC<ModalNotesCorrectedProps> = ({
   );
 };
 
-export default ModalNotesCorrected;
+export default ModalCorrected;

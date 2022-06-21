@@ -13,6 +13,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     fetchNotes();
+    fetchTages();
     setTimeout(() => {
       setLoading(false);
     }, 1500);
@@ -32,7 +33,7 @@ function App() {
   async function fetchTages() {
     try {
       const response = await axios.get<ITages[]>(
-        "https://notes-tages.herokuapp.com/notes"
+        "https://notes-tages.herokuapp.com/tages"
       );
       setTages(response.data);
     } catch (e) {
@@ -63,7 +64,8 @@ function App() {
           <NotesList 
           deliteNotes={deliteNotes}
           correctedNotes={correctedNotes}
-          notes={notes} 
+          notes={notes}
+          tages={tages} 
           />
         </div>
       ) : (

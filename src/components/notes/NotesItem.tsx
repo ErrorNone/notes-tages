@@ -1,27 +1,38 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Accordion, CloseButton } from "react-bootstrap";
-import { INotes } from "../../types/types";
-import ModalNotesCorrected from "./ModalNotesCorrected";
+import { INotes, ITages } from "../../types/types";
+import ModalCorrected from "../modal/ModalCorrected";
+
 import "./NotesItem.scss";
 
 interface NotesItemProps {
   note: INotes;
+  tages: ITages[];
   index: number;
   deliteNotes: (id: number) => void;
   correctedNotes: (id: number, correctedNote: any) => void;
 }
 
-const NotesItem: FC<NotesItemProps> = ({ note, index, deliteNotes, correctedNotes }) => {
+const NotesItem: FC<NotesItemProps> = ({ note, tages, index, deliteNotes, correctedNotes }) => {
   const [show, setShow] = useState(false);
+  const [tagesName, setTagesName] = useState("");
 
+  const tagesGet = () => {
+    tages.map(tage => tage.id === note.id ? setTagesName(tage.name) : tagesName)
+  }
+  useEffect(() => {
+    tagesGet()
+  }, [])
+
+  
+  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return (
     <>
       <Accordion.Item eventKey={"" + index}>
-      
         <Accordion.Header>
-          {note.title} <h6 className="mb-0  mx-3">#Lorem</h6>
+          {note.title} <h6 className="mb-0  mx-3">{tagesName.length ? `#${tagesName}` : ""}</h6>
           <CloseButton
             style={{ zIndex: 1000, right: 5 }}
             className="position-absolute top-50 translate-middle"
@@ -47,11 +58,14 @@ const NotesItem: FC<NotesItemProps> = ({ note, index, deliteNotes, correctedNote
         </Accordion.Header>
         <Accordion.Body>{note.body}</Accordion.Body>
       </Accordion.Item>
-      <ModalNotesCorrected
+      <ModalCorrected
         correctedNotes={correctedNotes}
         handleClose={handleClose}
         show={show}
         note={note}
+        tages={tages}
+        tagesName={tagesName}
+        setTagesName={setTagesName}
       />
     </>
   );
