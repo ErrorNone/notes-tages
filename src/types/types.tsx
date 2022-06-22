@@ -9,3 +9,8 @@ export interface ITages {
     name: string;
 }
 
+export interface IOptions {
+    value: string;
+    label: string;
+}
+

@@ -8,8 +8,8 @@ interface ModalCorrectedProps {
   correctedNotes: (id: number, correctedNote: any) => void;
   note: INotes;
   tages: ITages[];
-  tagesName: string;
-  setTagesName: (value: string) => void;
+  // tagesName: string;
+  // setTagesName: (value: string) => void;
 }
 
 const ModalCorrected: FC<ModalCorrectedProps> = ({
@@ -17,13 +17,13 @@ const ModalCorrected: FC<ModalCorrectedProps> = ({
   handleClose,
   correctedNotes,
   note,
-  tagesName,
-  setTagesName,
+  // tagesName,
+  // setTagesName,
   tages,
 }) => {
   const [titleEdit, setTitleEdit] = useState(`${note.title}`);
   const [bodyEdit, setBodyEdit] = useState(`${note.body}`);
-  const [newTeg, setNewTeg] = useState(`#${tagesName}`);
+  // const [newTeg, setNewTeg] = useState(`#${tagesName}`);
 
   const editNotes = (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault();
@@ -32,15 +32,15 @@ const ModalCorrected: FC<ModalCorrectedProps> = ({
       title: titleEdit,
       body: bodyEdit,
     };
-    setTagesName(newTeg);
+    // setTagesName(newTeg);
     correctedNotes(note.id, newNotes);
 
     setTitleEdit("");
     setBodyEdit("");
-    setNewTeg("");
+    // setNewTeg("");
   };
   
-  console.log(newTeg);
+
   
 
   return (
@@ -58,9 +58,9 @@ const ModalCorrected: FC<ModalCorrectedProps> = ({
               onChange={(e) => setTitleEdit(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+          {/*<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
             <Form.Label>Добавить тег</Form.Label>
-            <div className="d-flex">
+             <div className="d-flex">
               <Form.Control
                 className="rounded-0 rounded-start"
                 placeholder="Введите тег..."
@@ -70,8 +70,8 @@ const ModalCorrected: FC<ModalCorrectedProps> = ({
               <Button className="rounded-0 rounded-end" variant="primary">
                 Добавить
               </Button>
-            </div>
-          </Form.Group>
+            </div> 
+          </Form.Group>*/}
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Label>Описание</Form.Label>
             <Form.Control

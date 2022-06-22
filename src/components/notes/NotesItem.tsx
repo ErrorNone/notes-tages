@@ -2,6 +2,8 @@ import React, { FC, useEffect, useState } from "react";
 import { Accordion, CloseButton } from "react-bootstrap";
 import { INotes, ITages } from "../../types/types";
 import ModalCorrected from "../modal/ModalCorrected";
+import Select from "react-select";
+import CreatableSelect from 'react-select/creatable';
 
 import "./NotesItem.scss";
 
@@ -13,32 +15,48 @@ interface NotesItemProps {
   correctedNotes: (id: number, correctedNote: any) => void;
 }
 
-const NotesItem: FC<NotesItemProps> = ({ note, tages, index, deliteNotes, correctedNotes }) => {
+const NotesItem: FC<NotesItemProps> = ({
+  note,
+  tages,
+  index,
+  deliteNotes,
+  correctedNotes,
+}) => {
   const [show, setShow] = useState(false);
-  const [tagesName, setTagesName] = useState("");
+  const [tagesName, setTagesName] = useState(null);
 
-  const tagesGet = () => {
-    tages.map(tage => tage.id === note.id ? setTagesName(tage.name) : tagesName)
-  }
-  useEffect(() => {
-    tagesGet()
-  }, [])
+  // const tagesGet = () => {
+  //   tages.map(tage => tage.id === note.id ? setTagesName(tage.name) : tagesName)
+  // }
+  // useEffect(() => {
+  //   tagesGet()
+  // }, [])
 
-  
-  
+
+  const options = tages.map((tage) => {
+    return { value: `#${tage.name}`, label: `#${tage.name}` };
+  });
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
   return (
     <>
       <Accordion.Item eventKey={"" + index}>
         <Accordion.Header>
-          {note.title} <h6 className="mb-0  mx-3">{tagesName.length ? `#${tagesName}` : ""}</h6>
+          {note.title}{" "}
+          <CreatableSelect
+            className=" mx-3"
+            isMulti
+            
+            isClearable
+            options={options}
+          />
           <CloseButton
             style={{ zIndex: 1000, right: 5 }}
             className="position-absolute top-50 translate-middle"
             onClick={() => deliteNotes(note.id)}
           />
-
           <button
             onClick={handleShow}
             style={{ zIndex: 1000, right: 40 }}
@@ -64,8 +82,8 @@ const NotesItem: FC<NotesItemProps> = ({ note, tages, index, deliteNotes, correc
         show={show}
         note={note}
         tages={tages}
-        tagesName={tagesName}
-        setTagesName={setTagesName}
+        // tagesName={tagesName}
+        // setTagesName={setTagesName}
       />
     </>
   );
